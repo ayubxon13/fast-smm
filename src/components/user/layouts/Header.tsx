@@ -1,3 +1,4 @@
+"use client";
 import {Button} from "@/components/ui/button";
 import {Separator} from "@/components/ui/separator";
 import Link from "next/link";
@@ -11,8 +12,10 @@ import {
 } from "@/components/ui/sheet";
 import {TextAlignRightIcon} from "@radix-ui/react-icons";
 import {ToggleTheme} from "../ui/ToggleTheme";
+import {useState} from "react";
 
 export default function Header() {
+  const [openSheet, setOpenSheet] = useState(false);
   return (
     <>
       <header className="fixed backdrop-blur-lg top-0 left-0 w-full z-50 shadow-md">
@@ -37,8 +40,12 @@ export default function Header() {
             <div className="flex items-center gap-2">
               <Login />
               <ToggleTheme />
-              <Sheet>
-                <SheetTrigger className="md:hidden visible" asChild>
+              <Sheet open={openSheet}>
+                <SheetTrigger
+                  onClick={() => setOpenSheet(true)}
+                  className="md:hidden visible"
+                  asChild
+                >
                   <Button size="icon" className="px-2" variant="outline">
                     <TextAlignRightIcon />
                   </Button>
@@ -47,17 +54,32 @@ export default function Header() {
                   <SheetHeader>
                     <Button className="justify-start" variant="link">
                       <SheetTitle>
-                        <Link href="#statistics">Statistika</Link>
+                        <Link
+                          onClick={() => setOpenSheet(false)}
+                          href="#statistics"
+                        >
+                          Statistika
+                        </Link>
                       </SheetTitle>
                     </Button>
                     <Button className="justify-start" variant="link">
                       <SheetTitle>
-                        <Link href="#services">Xizmatlar</Link>
+                        <Link
+                          onClick={() => setOpenSheet(false)}
+                          href="#services"
+                        >
+                          Xizmatlar
+                        </Link>
                       </SheetTitle>
                     </Button>
                     <Button className="justify-start" variant="link">
                       <SheetTitle>
-                        <Link href="#about-us">Biz haqimizda</Link>
+                        <Link
+                          onClick={() => setOpenSheet(false)}
+                          href="#about-us"
+                        >
+                          Biz haqimizda
+                        </Link>
                       </SheetTitle>
                     </Button>
                   </SheetHeader>

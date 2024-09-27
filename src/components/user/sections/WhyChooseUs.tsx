@@ -9,7 +9,7 @@ import SectionsTitle from "../ui/SectionsTitle";
 export default function WhyChooseUs() {
   return (
     <>
-      <section id="about-us" className="max-container">
+      <section id="about-us" className="scroll-mt-20 max-container">
         <SectionsTitle className="text-center">
           Nima uchun bizni tanlash kerak ?
         </SectionsTitle>
