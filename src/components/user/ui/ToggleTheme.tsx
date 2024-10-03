@@ -13,7 +13,6 @@ import {Button} from "@/components/ui/button";
 
 export function ToggleTheme() {
   const {setTheme, theme} = useTheme();
-  console.log(theme);
 
   return (
     <DropdownMenu>
@@ -28,7 +27,7 @@ export function ToggleTheme() {
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem
           checked={theme === "light"}
-          onClick={() => setTheme("dark")}
+          onClick={() => setTheme("light")}
         >
           Oq
         </DropdownMenuCheckboxItem>
@@ -40,7 +39,7 @@ export function ToggleTheme() {
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={theme === "system"}
-          onClick={() => setTheme("dark")}
+          onClick={() => setTheme("system")}
         >
           Tizim bo&apos;yicha
         </DropdownMenuCheckboxItem>

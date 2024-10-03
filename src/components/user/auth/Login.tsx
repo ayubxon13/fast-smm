@@ -11,6 +11,7 @@ import {
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {EnterIcon} from "@radix-ui/react-icons";
+import Link from "next/link";
 
 export default function Login() {
   return (
@@ -44,7 +45,9 @@ export default function Login() {
           </DialogDescription>
         </div>
         <DialogFooter>
-          <Button type="submit">Save changes</Button>
+          <Link href="/new-order">
+            <Button type="submit">Save changes</Button>
+          </Link>
         </DialogFooter>
       </DialogContent>
     </Dialog>
