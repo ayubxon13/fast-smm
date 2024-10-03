@@ -58,11 +58,15 @@ export default function NewOrder() {
     const getData = async () => {
       try {
         setIsLoading(true);
-        const res = await fetch("http://localhost:3001/api/services");
+        const res = await fetch(
+          "https://fast-smm-backend.vercel.app/api/services"
+        );
         if (!res.ok) {
           throw new Error("Network response was not ok");
         }
         const data: AllServices[] = await res.json();
+        console.log(data);
+
         setServices(data); // Set the services state
         const uniqueCategories = Array.from(
           new Set(data.map((service) => service.category))
