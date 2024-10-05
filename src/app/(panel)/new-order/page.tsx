@@ -103,17 +103,20 @@ export default function NewOrder() {
     const addOrder = async () => {
       try {
         setIsLoading(true);
-        const res = await fetch("http://localhost:3001/api/add-order", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            service: singleService?.service,
-            link: inputValue.link,
-            quantity: inputValue.quantity,
-          }),
-        });
+        const res = await fetch(
+          "https://fast-smm-backend.vercel.app/api/add-order",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              service: singleService?.service,
+              link: inputValue.link,
+              quantity: inputValue.quantity,
+            }),
+          }
+        );
 
         if (!res.ok) {
           throw new Error(`Server responded with status ${res.status}`);
