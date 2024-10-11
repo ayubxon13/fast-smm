@@ -1,4 +1,3 @@
-"use client";
 import {Button} from "@/components/ui/button";
 import {
   Dialog,
@@ -10,24 +9,20 @@ import {
 } from "@/components/ui/dialog";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
-import {login} from "@/lib/auth-actions"; // Ensure this imports correctly.
-import {useState} from "react";
+import {signup} from "@/lib/auth-actions";
 
-type ThisProps = {
+type thisProps = {
   show: boolean;
   onOpenChange(open: boolean): void;
   onSignUpClick(): void;
 };
 
-export default function Login({onOpenChange, onSignUpClick, show}: ThisProps) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+export default function SignUp({show, onOpenChange, onSignUpClick}: thisProps) {
   return (
     <Dialog onOpenChange={onOpenChange} open={show}>
       <DialogContent className="max-w-[425px] w-full">
         <DialogHeader className="text-left">
-          <DialogTitle>Tizimga kirish</DialogTitle>
+          <DialogTitle className="">{`Ro'yhatdan o'tish`}</DialogTitle>
           <DialogDescription>
             Bizning xizmatlarimizdan foydalanishingiz uchun tizimga kirishingiz
             kerak.
@@ -39,8 +34,6 @@ export default function Login({onOpenChange, onSignUpClick, show}: ThisProps) {
               <div className="grid gap-2">
                 <Label>Email</Label>
                 <Input
-                  value={email}
-                  onChange={(e) => setEmail(e.currentTarget.value)}
                   name="email"
                   type="text"
                   required // Added required attribute
@@ -49,8 +42,6 @@ export default function Login({onOpenChange, onSignUpClick, show}: ThisProps) {
               <div className="grid gap-2">
                 <Label>Password</Label>
                 <Input
-                  value={password}
-                  onChange={(e) => setPassword(e.currentTarget.value)}
                   name="password"
                   type="password"
                   required // Added required attribute
@@ -63,13 +54,13 @@ export default function Login({onOpenChange, onSignUpClick, show}: ThisProps) {
                 variant="link"
                 onClick={onSignUpClick}
               >
-                {"Hisobingiz yo'qmi?"}
+                Hisobingiz bormi?
               </Button>
               <DialogDescription>Parol esdan chiqdimi?</DialogDescription>
             </div>
           </div>
           <DialogFooter>
-            <Button formAction={login} type="submit">
+            <Button formAction={signup} type="submit">
               Kirish
             </Button>{" "}
             {/* Changed button text to 'Kirish' */}

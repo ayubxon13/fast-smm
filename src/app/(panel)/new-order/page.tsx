@@ -32,8 +32,11 @@ import {AllServices} from "@/app/interfaces";
 import Loading from "@/components/ui/loading";
 import {Label} from "@/components/ui/label";
 import {TextAlignRightIcon} from "@radix-ui/react-icons";
+import {createClient} from "@/utils/supabase/client";
+import {User} from "@supabase/supabase-js";
 
 export default function NewOrder() {
+  const [userData, setUserData] = useState<null | User>(null);
   const usdPrice = 14;
   const [isOpen, setIsOpen] = useState(false);
   const [services, setServices] = useState<null | AllServices[]>(null);
@@ -97,8 +100,6 @@ export default function NewOrder() {
     setSingleService(filtered || null);
   };
 
-  console.log(singleService?.rate);
-
   const handleSubmitBtn = () => {
     const addOrder = async () => {
       try {
@@ -117,11 +118,9 @@ export default function NewOrder() {
             }),
           }
         );
-
         if (!res.ok) {
           throw new Error(`Server responded with status ${res.status}`);
         }
-
         const data = await res.json();
         console.log(data);
         setIsLoading(false);
@@ -129,9 +128,42 @@ export default function NewOrder() {
         setIsLoading(false);
       }
     };
-
     addOrder();
   };
+
+  const supabase = createClient();
+
+  // useEffect(() => {
+  //   const getBalance = async () => {
+  //     const {data} = await supabase.auth.updateUser({
+  //       email: "yuldoshevv7@gmail.com",
+  //       data: {
+  //         balance: inputValue.quantity,
+  //       },
+  //     });
+  //     console.log(data);
+  //   };
+
+  //   getBalance();
+  // }, []);
+
+  async function getUserData() {
+    const {data, error} = await supabase.auth.getUser();
+
+    if (error) {
+      console.error("Foydalanuvchini olishda xato:", error);
+      return null; // Xato bo'lsa, null qaytaradi
+    }
+    data && setUserData(data.user);
+    return data.user;
+  }
+
+  getUserData().then((user) => {
+    if (user) {
+    } else {
+      console.log("Foydalanuvchi topilmadi.");
+    }
+  });
 
   return (
     <>
@@ -184,7 +216,8 @@ export default function NewOrder() {
                 </div>
                 <div className="flex items-center sm:gap-10 gap-3 ml-auto">
                   <p className="text-slate-100 sm:text-base text-sm flex items-center gap-2">
-                    Balance: 312,3131 <span className="font-bold">uzs</span>
+                    Balance: {userData?.user_metadata?.balance ?? 1}{" "}
+                    <span className="font-bold">uzs</span>
                   </p>
                   <div className="flex items-center gap-2">
                     <ToggleTheme />
@@ -199,29 +232,29 @@ export default function NewOrder() {
               <Card className="p-3 grid lg:gap-5 gap-3 xl:max-w-4xl w-full">
                 <div className="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-3">
                   <Button
-                    className="xl:px-9 xl:py-6 2xl:text-lg xl:text-base"
+                    className="xl:px-9 border border-white xl:py-6 2xl:text-lg xl:text-base"
                     variant="secondary"
                   >
                     New order
                   </Button>
                   <Button
-                    className="xl:px-9 xl:py-6 2xl:text-lg xl:text-base"
+                    className="xl:px-9 border xl:py-6 2xl:text-lg xl:text-base"
+                    variant="secondary"
+                  >
+                    Yoqtirganlar
+                  </Button>
+                  {/* <Button
+                    className="xl:px-9 border xl:py-6 2xl:text-lg xl:text-base"
                     variant="secondary"
                   >
                     New order
                   </Button>
                   <Button
-                    className="xl:px-9 xl:py-6 2xl:text-lg xl:text-base"
+                    className="xl:px-9 border xl:py-6 2xl:text-lg xl:text-base"
                     variant="secondary"
                   >
                     New order
-                  </Button>
-                  <Button
-                    className="xl:px-9 xl:py-6 2xl:text-lg xl:text-base"
-                    variant="secondary"
-                  >
-                    New order
-                  </Button>
+                  </Button> */}
                 </div>
                 <div className="grid gap-2">
                   <Label>Category</Label>

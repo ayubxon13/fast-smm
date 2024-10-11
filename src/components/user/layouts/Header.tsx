@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sheet";
 import {TextAlignRightIcon} from "@radix-ui/react-icons";
 import {ToggleTheme} from "../ui/ToggleTheme";
-import Login from "../auth/Login";
+import ShowAuth from "../auth/ShowAuth";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -43,7 +43,7 @@ export default function Header() {
               </Button>
             </div>
             <div className="flex items-center gap-2">
-              <Login />
+              <ShowAuth />  
               <ToggleTheme />
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
                 <SheetTrigger className="md:hidden visible" asChild>
