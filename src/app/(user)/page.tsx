@@ -24,6 +24,7 @@ export default function Home() {
             loop
           />
         </p>
+        {/* <SuccessfulCard btnText="dewdw" desc="dewdew" title="dwedwedew" /> */}
         <Statistics />
         <Services />
         <WhyChooseUs />

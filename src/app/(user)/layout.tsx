@@ -1,4 +1,5 @@
 import type {Metadata} from "next";
+import NextTopLoader from "nextjs-toploader";
 import {Inter} from "next/font/google";
 import "../../app/globals.css";
 import {ThemeProvider} from "next-themes";
@@ -19,6 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <NextTopLoader color="#0077b6" height={4} />
           {children}
         </ThemeProvider>
       </body>
