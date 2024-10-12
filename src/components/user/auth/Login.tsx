@@ -62,6 +62,7 @@ export default function Login({onOpenChange, onSignUpClick, show}: ThisProps) {
                 </div>
                 <div className="flex justify-between items-center">
                   <Button
+                    type="button"
                     className="p-0 m-0"
                     variant="link"
                     onClick={onSignUpClick}

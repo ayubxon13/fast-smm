@@ -3,27 +3,23 @@ import {NextResponse} from "next/server";
 import type {NextRequest} from "next/server";
 
 export function middleware(request: NextRequest) {
-  // Cookie'dan foydalanuvchi ma'lumotini oling
-  const token = request.cookies.get("sb-eiaenpogjzptiwfrxzgh-auth-token"); // cookie nomini o'zgartiring
-  
+  const cookies = request.cookies.getAll();
 
-  // Agar cookie mavjud bo'lsa, foydalanuvchini o'tayotgan sahifaga qoldiring
-  if (token) {
+  const authToken = cookies.find((cookie) =>
+    cookie.name.includes("auth-token")
+  );
+  if (authToken) {
     return NextResponse.next();
   }
 
   const currentPath = request.nextUrl.pathname;
 
-  if (!token && currentPath !== "/") {
-    // Redirect to the home page if no session and not already on home
-    console.log("Redirecting to home because no session found."); // Log redirect action
+  if (!authToken && currentPath !== "/") {
+    console.log("Redirecting to home because no session found.");
     return NextResponse.redirect(new URL("/", request.url));
   }
-
-  // Agar cookie mavjud bo'lmasa, foydalanuvchini "/" sahifasiga yo'naltiring
 }
 
-// Middleware'ni qo'llash uchun yo'llarni aniqlang
 export const config = {
   matcher: [
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
