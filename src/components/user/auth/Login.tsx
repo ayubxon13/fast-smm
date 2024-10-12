@@ -14,13 +14,19 @@ import {Label} from "@/components/ui/label";
 import {useLogin} from "@/hooks/useLogin";
 import {FormEvent} from "react";
 
-type ThisProps = {
+type thisProps = {
   show: boolean;
   onOpenChange(open: boolean): void;
   onSignUpClick(): void;
+  onForgotPasswordClick(): void;
 };
 
-export default function Login({onOpenChange, onSignUpClick, show}: ThisProps) {
+export default function Login({
+  onOpenChange,
+  onForgotPasswordClick,
+  onSignUpClick,
+  show,
+}: thisProps) {
   const {login, success} = useLogin();
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -40,7 +46,7 @@ export default function Login({onOpenChange, onSignUpClick, show}: ThisProps) {
                 kirishingiz kerak.
               </DialogDescription>
             </DialogHeader>
-            <form onSubmit={handleLogin}>
+            <form className="grid gap-4 pt-4 pb-2" onSubmit={handleLogin}>
               <div>
                 <div className="grid gap-4 pt-4 pb-2">
                   <div className="grid gap-2">
@@ -53,11 +59,7 @@ export default function Login({onOpenChange, onSignUpClick, show}: ThisProps) {
                   </div>
                   <div className="grid gap-2">
                     <Label>Password</Label>
-                    <Input
-                      name="password"
-                      type="password"
-                      required // Added required attribute
-                    />
+                    <Input name="password" type="password" required />
                   </div>
                 </div>
                 <div className="flex justify-between items-center">
@@ -69,7 +71,9 @@ export default function Login({onOpenChange, onSignUpClick, show}: ThisProps) {
                   >
                     {"Hisobingiz yo'qmi?"}
                   </Button>
-                  <DialogDescription>Parol esdan chiqdimi?</DialogDescription>
+                  <DialogDescription onClick={onForgotPasswordClick}>
+                    Parol esdan chiqdimi?
+                  </DialogDescription>
                 </div>
               </div>
               <DialogFooter>

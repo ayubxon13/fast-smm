@@ -3,10 +3,12 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import {EnterIcon} from "@radix-ui/react-icons";
 import {useState} from "react";
+import ForgotPassword from "./ForgotPassword";
 
 export default function ShowAuth() {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignUp, setShowSignUp] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   return (
     <>
@@ -24,14 +26,22 @@ export default function ShowAuth() {
           setShowLogin(false);
           setShowSignUp(true);
         }}
+        onForgotPasswordClick={() => {
+          setShowLogin(false);
+          setShowForgotPassword(true);
+        }}
       />
       <SignUp
         show={showSignUp}
-        onSignUpClick={() => {
+        onLoginClick={() => {
           setShowSignUp(false);
           setShowLogin(true);
         }}
         onOpenChange={() => setShowSignUp((prev) => !prev)}
+      />
+      <ForgotPassword
+        show={showForgotPassword}
+        onOpenChange={() => setShowForgotPassword((prev) => !prev)}
       />
     </>
   );

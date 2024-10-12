@@ -18,13 +18,13 @@ import {toast} from "sonner";
 type thisProps = {
   show: boolean;
   onOpenChange(open: boolean): void;
-  onSignUpClick(): void;
+  onLoginClick(): void;
 };
 
-export default function SignUp({show, onOpenChange, onSignUpClick}: thisProps) {
+export default function SignUp({show, onOpenChange, onLoginClick}: thisProps) {
   const {signup, success} = useSignup();
   const [phone, setPhone] = useState("+998 ");
-  const [phoneError, setPhoneError] = useState<string | null>(null); // Track phone number error
+  const [phoneError, setPhoneError] = useState<string | null>(null);
 
   const handleSignup = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -99,11 +99,10 @@ export default function SignUp({show, onOpenChange, onSignUpClick}: thisProps) {
                     type="button"
                     className="p-0 m-0"
                     variant="link"
-                    onClick={onSignUpClick}
+                    onClick={onLoginClick}
                   >
                     Hisobingiz bormi?
                   </Button>
-                  <DialogDescription>Parol esdan chiqdimi?</DialogDescription>
                 </div>
               </div>
               <DialogFooter>
