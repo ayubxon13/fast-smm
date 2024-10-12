@@ -11,6 +11,9 @@ import {
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {useSignup} from "@/hooks/useSignup";
+import {formatPhoneNumber} from "@/utils/utils";
+import {ChangeEvent, useState} from "react";
+import {toast} from "sonner";
 
 type thisProps = {
   show: boolean;
@@ -20,22 +23,45 @@ type thisProps = {
 
 export default function SignUp({show, onOpenChange, onSignUpClick}: thisProps) {
   const {signup, success} = useSignup();
+  const [phone, setPhone] = useState("+998 ");
+  const [phoneError, setPhoneError] = useState<string | null>(null); // Track phone number error
+
   const handleSignup = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const {success, error} = await signup(formData);
 
-    if (!success) {
-      console.error("Signup failed:", error);
+    if (phone.length < 16) {
+      toast.error("Telefon raqami to'g'ri kiritilmadi.");
+      return;
+    } else {
+      setPhoneError(null);
+    }
+
+    await signup(formData);
+  };
+
+  const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    if (!value.startsWith("+998")) {
+      return;
+    }
+
+    const formattedPhone = formatPhoneNumber(value);
+    setPhone(formattedPhone);
+
+    if (phoneError) {
+      setPhoneError(null);
     }
   };
+
   return (
     <>
       {success || (
         <Dialog onOpenChange={onOpenChange} open={show}>
           <DialogContent className="max-w-[425px] w-full">
             <DialogHeader className="text-left">
-              <DialogTitle className="">{`Ro'yhatdan o'tish`}</DialogTitle>
+              <DialogTitle>{`Ro'yhatdan o'tish`}</DialogTitle>
               <DialogDescription>
                 Bizning xizmatlarimizdan foydalanishingiz uchun tizimga
                 kirishingiz kerak.
@@ -45,20 +71,27 @@ export default function SignUp({show, onOpenChange, onSignUpClick}: thisProps) {
               <div>
                 <div className="grid gap-4 pt-4 pb-2">
                   <div className="grid gap-2">
-                    <Label>Email</Label>
+                    <Label>Foydalanuvchi nomi</Label>
+                    <Input name="username" type="text" required />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label>Telefon raqam</Label>
                     <Input
-                      name="email"
-                      type="text"
-                      required // Added required attribute
+                      type="tel"
+                      name="phone"
+                      value={phone}
+                      onChange={handlePhoneChange}
+                      placeholder="+998 90 123 45 67"
+                      required
                     />
                   </div>
                   <div className="grid gap-2">
-                    <Label>Password</Label>
-                    <Input
-                      name="password"
-                      type="password"
-                      required // Added required attribute
-                    />
+                    <Label>Email</Label>
+                    <Input name="email" type="text" required />
+                  </div>
+                  <div className="grid gap-2">
+                    <Label>Parol</Label>
+                    <Input name="password" type="password" required />
                   </div>
                 </div>
                 <div className="flex justify-between items-center">

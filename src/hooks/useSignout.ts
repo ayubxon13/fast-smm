@@ -1,31 +1,44 @@
 import {useCallback, useState} from "react";
 import {createClient} from "@/utils/supabase/client";
 import {useRouter} from "next/navigation";
+import {toast} from "sonner";
 
 export const useSignout = () => {
   const router = useRouter();
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
 
   const signout = useCallback(async () => {
-    setLoading(true); // Start loading
-    setError(null); // Reset error state
+    setLoading(true);
     const {error: signoutError} = await supabase.auth.signOut();
-    setLoading(false); // End loading
+    setLoading(false);
 
     if (signoutError) {
-      setError(signoutError.message); // Set error message
-      setSuccess(false); // Indicate failure
-      router.push("/error");
+      let errorMessage = "";
+      switch (signoutError.message) {
+        case "Network error: Failed to connect":
+          errorMessage = "Tarmoq xatosi: ulanib bo'lmadi.";
+          break;
+        case "Invalid session or expired token":
+          errorMessage = "Yaroqsiz seans yoki muddati o'tgan token.";
+          break;
+        case "No user is logged in":
+          errorMessage = "Hechqanday foydalanuvchi tizimga kirmagan.";
+          break;
+
+        default:
+          errorMessage = "Noma'lum xatolik yuz berdi.";
+      }
+      toast.error(errorMessage);
+      setSuccess(false);
       return {success: false, error: signoutError.message};
     }
 
     router.push("/");
-    setSuccess(true); // Indicate success
+    setSuccess(true);
     return {success: true};
   }, [router, supabase]);
 
-  return {signout, error, success, loading};
+  return {signout, success, loading};
 };

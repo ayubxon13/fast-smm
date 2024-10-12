@@ -12,6 +12,7 @@ import {
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {useLogin} from "@/hooks/useLogin";
+import {FormEvent} from "react";
 
 type ThisProps = {
   show: boolean;
@@ -21,7 +22,7 @@ type ThisProps = {
 
 export default function Login({onOpenChange, onSignUpClick, show}: ThisProps) {
   const {login, success} = useLogin();
-  const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     await login(formData);
