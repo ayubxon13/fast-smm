@@ -14,7 +14,7 @@ export default function Loading() {
   }, []);
 
   return (
-    <div className="absolute inset-0 bg-opacity-45 bg-black flex items-center justify-center">
+    <div className="absolute h-screen inset-0 bg-opacity-45 bg-black flex items-center justify-center">
       <Loader className="animate-spin" />
     </div>
   );
