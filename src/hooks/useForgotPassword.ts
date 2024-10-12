@@ -13,7 +13,7 @@ export const useForgotPassword = () => {
       const {error: forgotError} = await supabase.auth.resetPasswordForEmail(
         email,
         {
-          redirectTo: "https://fast-smm.vercel.app/dashboard/account",
+          redirectTo: `${window.location.origin}/dashboard/account`,
         }
       );
       setLoading(false);

@@ -1,10 +1,8 @@
 import {useCallback, useState} from "react";
 import {createClient} from "@/utils/supabase/client";
-import {useRouter} from "next/navigation";
 import {toast} from "sonner";
 
 export const useSignout = () => {
-  const router = useRouter();
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<boolean>(false);
@@ -35,10 +33,9 @@ export const useSignout = () => {
       return {success: false, error: signoutError.message};
     }
 
-    router.push("/");
     setSuccess(true);
     return {success: true};
-  }, [router, supabase]);
+  }, [supabase]);
 
   return {signout, success, loading};
 };
