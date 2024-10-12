@@ -13,7 +13,7 @@ export const useForgotPassword = () => {
       const {error: forgotError} = await supabase.auth.resetPasswordForEmail(
         email,
         {
-          redirectTo: `${window.location.origin}/dashboard/account`,
+          redirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/account`,
         }
       );
       setLoading(false);
