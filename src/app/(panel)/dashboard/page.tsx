@@ -66,8 +66,6 @@ export default function NewOrder() {
           throw new Error("Network response was not ok");
         }
         const data: AllServices[] = await res.json();
-        console.log(data);
-
         setServices(data); // Set the services state
         const uniqueCategories = Array.from(
           new Set(data.map((service) => service.category))
@@ -97,8 +95,6 @@ export default function NewOrder() {
     );
     setSingleService(filtered || null);
   };
-
-  console.log(userData);
 
   const handleSubmitBtn = () => {
     const addOrder = async () => {
@@ -130,6 +126,53 @@ export default function NewOrder() {
     };
     addOrder();
   };
+  function replaceWords(category: string): string {
+    const replacements: {[key: string]: string} = {
+      "Auto Refill": "Avtomatik qayta tiklanadi",
+      "No Refill": "Qayta tiklanmaydi",
+      "Low Drop": "Obunachilar kam tushadi",
+      "High Drop": "Obunachilar ko'p tushadi",
+      "Less Drop": "Obunachilar kam tushadi",
+      "Non Drop": "BEZ MINUS",
+      "NON DROP": "BEZ MINUS",
+      Views: "Ko'rishlar",
+      Followers: "Obunachilar",
+      Likes: "Yoqtirishlar",
+      Comments: "Izohlar",
+      Story: "Istoriya",
+      Minutes: "Minutiga",
+      Channel: "Kanal",
+      Group: "Guruh",
+      Members: "A'zolari",
+      "Watch Time": "Ko'rish Vaqti",
+      "Dislikes": "Yoqtimasliklar",
+      Real: "Haqiqiy",
+      Subscribers: "Obunachilar",
+      Shares: "Yuborishlar",
+      Mixed: "Aralashgan",
+      Bots: "Botlar",
+      People: "Odamlar",
+      Refill: "Qayta tiklanadi",
+      "Non Refill": "Qayta tiklanmaydi",
+      Female: "Ayol",
+      Cheapest: "Eng Arzon",
+      Cheap: "Arzon",
+      Male: "Erkak",
+      "By Topics": "Mavzular Bo'yicha",
+      INSTANT: "TEZKOR",
+      "Cheapest Working Services": "Eng arzon xizmatlar",
+      Praise: "Maqtov",
+      New: "Yangi",
+    };
+
+    let updatedCategory = category;
+    for (const key of Object.keys(replacements).sort(
+      (a, b) => b.length - a.length
+    )) {
+      updatedCategory = updatedCategory.replaceAll(key, replacements[key]);
+    }
+    return updatedCategory;
+  }
 
   return (
     <>
@@ -223,7 +266,7 @@ export default function NewOrder() {
                       <SelectLabel>Select a category</SelectLabel>
                       {categories?.map((cat) => (
                         <SelectItem key={cat} value={cat}>
-                          {cat}
+                          {replaceWords(cat)}
                         </SelectItem>
                       ))}
                     </SelectGroup>
@@ -241,7 +284,7 @@ export default function NewOrder() {
                       <SelectLabel>Select a service</SelectLabel>
                       {servicesOfCategory?.map((service) => (
                         <SelectItem key={service.name} value={service.name}>
-                          {service.name}
+                          {replaceWords(service.name)}
                         </SelectItem>
                       ))}
                     </SelectGroup>

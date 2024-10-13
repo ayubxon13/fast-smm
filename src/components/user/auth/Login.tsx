@@ -12,6 +12,7 @@ import {
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {useLogin} from "@/hooks/useLogin";
+import {ReloadIcon} from "@radix-ui/react-icons";
 import {FormEvent} from "react";
 
 type thisProps = {
@@ -27,7 +28,7 @@ export default function Login({
   onSignUpClick,
   show,
 }: thisProps) {
-  const {login, success} = useLogin();
+  const {login, success, loading} = useLogin();
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -71,13 +72,20 @@ export default function Login({
                   >
                     {"Hisobingiz yo'qmi?"}
                   </Button>
-                  <DialogDescription onClick={onForgotPasswordClick}>
-                    Parol esdan chiqdimi?
-                  </DialogDescription>
+                  <Button variant="link" className="cursor-pointer m-0 p-0" asChild>
+                    <DialogDescription onClick={onForgotPasswordClick}>
+                      Parol esdan chiqdimi?
+                    </DialogDescription>
+                  </Button>
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit">Kirish</Button>
+                <Button disabled={loading} type="submit">
+                  {loading && (
+                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  Kirish
+                </Button>
               </DialogFooter>
             </form>
           </DialogContent>

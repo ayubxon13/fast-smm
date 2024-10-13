@@ -1,3 +1,9 @@
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {Separator} from "../../ui/separator";
 import SectionsTitle from "../ui/SectionsTitle";
 export default function WhyChooseUs() {
@@ -7,7 +13,7 @@ export default function WhyChooseUs() {
         <SectionsTitle className="text-center">
           Nima uchun bizni tanlash kerak ?
         </SectionsTitle>
-        {/* <div className="grid justify-items-center gap-4 mt-7">
+        <div className="grid justify-items-center gap-4 mt-7">
           <div className="grid md:grid-cols-2 md:gap-6 gap-4 justify-between">
             <Card>
               <CardHeader>
@@ -111,7 +117,7 @@ export default function WhyChooseUs() {
               </CardHeader>
             </Card>
           </div>
-        </div> */}
+        </div>
       </section>
       <Separator />
     </>

@@ -12,6 +12,7 @@ import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
 import {useSignup} from "@/hooks/useSignup";
 import {formatPhoneNumber} from "@/utils/utils";
+import {ReloadIcon} from "@radix-ui/react-icons";
 import {ChangeEvent, useState} from "react";
 import {toast} from "sonner";
 
@@ -22,7 +23,7 @@ type thisProps = {
 };
 
 export default function SignUp({show, onOpenChange, onLoginClick}: thisProps) {
-  const {signup, success} = useSignup();
+  const {signup, success, loading} = useSignup();
   const [phone, setPhone] = useState("+998 ");
   const [phoneError, setPhoneError] = useState<string | null>(null);
 
@@ -106,7 +107,12 @@ export default function SignUp({show, onOpenChange, onLoginClick}: thisProps) {
                 </div>
               </div>
               <DialogFooter>
-                <Button type="submit">Kirish</Button>
+                <Button disabled={loading} type="submit">
+                  {loading && (
+                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                  )}
+                  {"RO'YHATDAN O'TISH"}
+                </Button>
               </DialogFooter>
             </form>
           </DialogContent>
