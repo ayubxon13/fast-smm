@@ -10,7 +10,7 @@ import SectionsTitle from "../ui/SectionsTitle";
 export default function Statistics() {
   return (
     <>
-      <section id="statistics" className="mt-10 scroll-mt-20 max-container">
+      <section id="statistics" className="mt-4 scroll-mt-20 max-container">
         <SectionsTitle>Nakrutka.uz raqamlarda</SectionsTitle>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-center gap-6 mt-7">
           <Card>
